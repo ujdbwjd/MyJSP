@@ -57,7 +57,26 @@ public class MainController extends HttpServlet {
 			md.cntmember(request);
 			rd = request.getRequestDispatcher("member.jsp");
 			
+		} else if(cmd.equals("/memberUpdate.do")) {
+			md.selectRow(request);
+			rd = request.getRequestDispatcher("memberUpdate.jsp");
+		} else if(cmd.equals("/memberUpdatePro.do")) {
+			md.updateRow(request);
+			md.select(request);
+			rd = request.getRequestDispatcher("member.jsp");
+		} else if(cmd.equals("/memberDelete.do")) {
+			String[] seqs = request.getParameterValues("seq");
+//			for(String temp : seqs)
+//				System.out.println("temp = " + temp);
+			md.delete(request, seqs);
+			md.select(request);
+			md.cntmember(request);
+			rd = request.getRequestDispatcher("member.jsp");
 		}
+		else {
+			rd = request.getRequestDispatcher("error404.jsp");
+		}
+		
 		rd.forward(request, response);
 	}
 
